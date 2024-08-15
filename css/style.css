@@ -14,7 +14,7 @@ body {
 
 header {
     border-bottom: 1px solid #ccc;
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .logo {
@@ -47,17 +47,18 @@ nav {
     transition: 0.3s;
 }
 
-.menu a: hover {
+.menu a:hover {
     background-color: #FFCC33;
 }
 
 .hero {
     text-align: center;
-    padding: 50px 0;
+    padding: 30px 0;
+    margin: 0;
 }
 
 .hero img {
-    max-width: 100%;
+    max-width: 35%;
     height: auto;
     border-radius: 20px;
 }
@@ -70,16 +71,17 @@ nav {
 .hero p {
     font-size: 18px;
     color: #666;
+    padding: 50px;
+    border-bottom: 1px solid #ccc;
 }
 
 .articles {
     text-align: center;
+    padding-top: 1px;
 }
 
 .articles h2 {
     font-size: 30px;
-    margin-bottom: 30px;
-    background-color: #FFCC33;
 }
 
 .articles-grid {
@@ -95,7 +97,7 @@ article {
 }
 
 article img {
-    max-width: 50%;
+    max-width: 30%;
     height: auto;
     border-radius: 10px;
 }
