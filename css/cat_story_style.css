@@ -1,0 +1,132 @@
+body {
+   margin: 0;
+   font-family: Arial, sans-serif;
+   background-color: #f9f9f9;
+}
+
+
+.container {
+   max-width: 1200px;
+   margin: 0 auto;
+   padding: 0 20px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+
+header {
+   border-bottom: 1px solid #ccc;
+   padding: 20px 0;
+}
+
+
+.logo {
+   font-size: 24px;
+   font-weight: bold;
+}
+
+
+nav {
+   display: flex;
+}
+
+
+.menu {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   display: flex;
+   align-items: center;
+}
+
+
+.menu li {
+   margin-left: 20px;
+}
+
+
+.menu a {
+   text-decoration: none;
+   color: #000;
+   font-weight: bold;
+   padding: 5px 10px;
+   border-radius: 3px;
+   transition: 0.3s;
+}
+
+
+.menu a:hover {
+   background-color: #FFCC33;
+}
+
+
+main .container {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   padding: 50px;
+}
+
+
+.birth-card {
+   display: flex;
+   flex-direction: row;
+   border-radius: 10px;
+   overflow: hidden;
+}
+
+
+.map-image {
+   position: relative;
+}
+
+
+.map-image img {
+   width: 400px;
+   height: auto;
+   object-fit: cover;
+   border-radius: 20px;
+}
+
+
+.birth-dates {
+   position: absolute;
+   top: 10px;
+   left: 10px;
+   background: rgba(0, 0, 0, 0.6);
+   color: #fff;
+   padding: 5px 10px;
+   border-radius: 5px;
+}
+
+
+.birth-description {
+   position: absolute;
+   bottom: 10px;
+   left: 10px;
+   background: rgba(0, 0, 0, 0.6);
+   color: #fff;
+   padding: 5px 10px;
+   border-radius: 5px;
+}
+
+
+.birth-details {
+   padding: 40px;
+   max-width: 500px;
+}
+
+
+.birth-details h1 {
+   margin: 0 0 20px;
+   font-size: 24px;
+}
+
+
+.birth-details p {
+   margin: 0 0 20px;
+   color: #666;
+   line-height: 25px;
+}
