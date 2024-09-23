@@ -51,24 +51,24 @@ nav {
     background-color: #FFCC33;
 }
 
-.hero {
+.cat {
     text-align: center;
     padding: 30px 0;
     margin: 0;
 }
 
-.hero img {
+.cat img {
     max-width: 35%;
     height: auto;
     border-radius: 20px;
 }
 
-.hero h1 {
+.cat h1 {
     font-size: 36px;
     margin: 20px 0 10px;
 }
 
-.hero p {
+.cat p {
     font-size: 18px;
     color: #666;
     padding: 50px;
@@ -86,12 +86,12 @@ nav {
 
 .articles-grid {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 20px;
 }
 
 article {
-    width: 20%;
     margin-bottom: 15px;
     text-align: center;
 }
@@ -112,23 +112,28 @@ article img {
     font-size: 24px;
 }
 
-.articles-grid h4 li:hover {
-    font-size: 17px;
+.article-list {
+    font-size: 15px;
+    margin-top: 15px;
+    text-align: center;
+    padding-left: 70px;
+    line-height: 30px;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.article-list li {
     transition: 0.3s;
+}
+
+.article-list li:hover {
+    font-size: 17px;
 }
 
 .articles-grid a {
     text-decoration: none;
     color: #000;
     font-weight: bold;
-}
-
-.articles-grid article h4 {
-    font-size: 15px;
-    margin-top: 15px;
-    text-align: left;
-    padding-left: 70px;
-    line-height: 30px;
 }
 
 footer {
