@@ -7,28 +7,33 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo" id="catNameLogo">
-                SOLOMON
-            </div>
-            <nav>
-                <ul class="menu">
-                    <li><a href="index.html">BLOG</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
-                    <li><a href="#articles">ARTICLES</a></li>
-                </ul>
-            </nav>
+<header>
+    <div class="container">
+        <div class="logo" id="catNameLogo">
+            SOLOMON
         </div>
-    </header>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">BLOG</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="#articles">ARTICLES</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <main>
     <section class="cat">
-        <div class="cat-container">
+        <div class="cat-container" id="catContainer">
             <img src="images/index_images/cat.png" alt="Solomon cat" id="catImg">
             <div class="speech-bubble" id="catBubble">Pet me</div>
+            <button id="clickBtn">Click me to see my friend</button>
         </div>
-        <button id="clickBtn">Click me</button>
     </section>
+    <div id="popup" class="pop-up hidden">
+        <div class="pop-up_content" id="popupContent">
+            <div id="imagesContainer"></div>
+        </div>
+    </div>
     <section class="articles" id="articles">
         <h2>All articles</h2>
         <div class="articles-grid">
@@ -87,6 +92,6 @@
         </div>
     </div>
 </footer>
-</body>
 <script src="src/index.js"></script>
+</body>
 </html>
