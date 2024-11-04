@@ -90,4 +90,3 @@ catImg.addEventListener('click', () => {
   setTimeout(() => {
     message.remove();
   }, 2000);
-});
