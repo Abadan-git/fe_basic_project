@@ -86,43 +86,6 @@ nav {
     cursor: pointer;
 }
 
-.cat button {
-    font-size: 36px;
-    margin: 20px 0 10px;
-    padding: 15px 40px;
-    background: linear-gradient(135deg, #6ED5DB, #67A6E8);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
-
-.pop-up {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.pop-up_content {
-    position: relative;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-}
-
-
-.hidden {
-    visibility: hidden;
-}
-
 .articles {
     text-align: center;
     padding-top: 1px;

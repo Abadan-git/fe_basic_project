@@ -4,12 +4,8 @@ const catHugImg = document.getElementById('catHugImg');
 const catHealthImg = document.getElementById('catHealthImg');
 const catDietImg = document.getElementById('catDietImg');
 const catGalleryImg = document.getElementById('catGalleryImg');
-const fewWords = document.getElementById('clickBtn');
 const catImg = document.getElementById('catImg');
 const catContainer = document.getElementById('catContainer');
-const clickBtn = document.getElementById('clickBtn');
-const popup = document.getElementById('popup');
-const imagesContainer = document.getElementById('imagesContainer');
 
 const updateElement = (element, { text = null, color = null, image = null, html = null } = {}) => {
   if (text !== null) element.textContent = text;
@@ -94,37 +90,4 @@ catImg.addEventListener('click', () => {
   setTimeout(() => {
     message.remove();
   }, 2000);
-});
-
-
-function fetchCatImage() {
-  const errorImgUrl = 'https://t3.ftcdn.net/jpg/05/08/67/42/360_F_508674247_d8JegDh7o9yJmYcae2jdEpsQ9LVmiXDM.jpg';
-
-  return fetch('https://api.thecatapi.com/v1/images/search')
-        .then(response => response.json())
-        .then(data => data[0]?.url)
-        .catch(error => {
-          console.error('Error fetching cat image:', error);
-          return errorImgUrl;
-        });
-}
-
-async function openPopupWithImage() {
-  popup.classList.remove('hidden');
-
-  const imageUrl = await fetchCatImage();
-  const img = document.createElement('img');
-  img.src = imageUrl;
-  img.style.width = '100%';
-  img.style.height = '80vh';
-  imagesContainer.appendChild(img);
-}
-
-clickBtn.addEventListener('click', openPopupWithImage);
-
-popup.addEventListener('click', (event) => {
-  if (event.target === popup) {
-    popup.classList.add('hidden');
-    imagesContainer.innerHTML = '';
-  }
 });
