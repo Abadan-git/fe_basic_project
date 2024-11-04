@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cats Gallery</title>
+    <link rel="stylesheet" href="../css/cat_gallery_style.css">
 </head>
 <body>
-
+<header>
+    <div class="container">
+        <a href="../index.html">
+            <img src="../images/index_images/back.png" alt="back" height="20px">
+        </a>
+        <div class="logo">CATS GALLERY</div>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">BLOG</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="../index.html#articles">ARTICLES</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main>
+    <section class="friends">
+        <div class="friends-container">
+            <h3>Solomon's friends</h3>
+            <label for="friends">Select the cat breed to see its photo:</label>
+            <select id="friends" name="friends"></select>
+            <button id="clickBtn" class="button">Submit</button>
+        </div>
+    </section>
+    <div id="popup" class="pop-up hidden">
+        <div class="pop-up_content" id="popupContent">
+            <div id="imagesContainer"></div>
+        </div>
+    </div>
+</main>
+<script src="../src/cat_gallery.js"></script>
 </body>
 </html>
