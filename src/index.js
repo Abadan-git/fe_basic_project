@@ -8,6 +8,7 @@
   const catImg = document.getElementById('catImg');
   const catContainer = document.getElementById('catContainer');
 
+  // Function to update an element’s properties
   const updateElement = (element, { text = null, color = null, image = null, html = null } = {}) => {
     if (text !== null) element.textContent = text;
     if (color !== null) element.style.color = color;
@@ -15,6 +16,7 @@
     if (html !== null) element.innerHTML = html;
   };
 
+  // Function to handle hover effects on elements
   const handleHover = (element, { hoverText = null, leaveText = null, hoverColor = null, leaveColor = null, hoverImage = null, leaveImage = null } = {}) => {
     element.addEventListener('mouseenter', () => {
       updateElement(element, { text: hoverText, color: hoverColor, image: hoverImage });
@@ -24,6 +26,7 @@
     });
   };
 
+  // Set hover effects on various elements with the `handleHover` function
   handleHover(catBubble, { hoverText: 'Meowww', leaveText: 'Pet me' });
   handleHover(catNameLogo, { hoverText: 'MY BABY', leaveText: 'SOLOMON', hoverColor: '#6ED5DB', leaveColor: 'black' });
   handleHover(catHugImg, { hoverImage: 'images/index_images/cat_hug.gif', leaveImage: 'images/index_images/cat_hug.png' });
@@ -31,6 +34,7 @@
   handleHover(catDietImg, { hoverImage: 'images/index_images/cat_diet.gif', leaveImage: 'images/index_images/cat_diet.png' });
   handleHover(catGalleryImg, { hoverImage: 'images/index_images/cat_gallery.gif', leaveImage: 'images/index_images/cat_gallery.png' });
 
+  // Function to create a message at the center of an element or return an existing one
   function createOrGetMessage(elem, html) {
     let existingMessage = document.getElementById('center-message');
 
@@ -54,12 +58,12 @@
                 text-align: center;
             `;
 
+
       message.innerHTML = html;
       catContainer.append(message);
 
       const messageWidth = message.offsetWidth;
       const messageHeight = message.offsetHeight;
-
       const coords = elem.getBoundingClientRect();
       const imgCenterX = coords.width / 2;
       const imgCenterY = coords.height / 2;
@@ -69,11 +73,13 @@
 
       return message;
     } else {
+
       existingMessage.innerHTML = html;
       return existingMessage;
     }
   }
 
+  // Event listener to show a temporary message when the main cat image is clicked
   catImg.addEventListener('click', () => {
     const message = createOrGetMessage(catContainer, 'Hello, world!');
 
