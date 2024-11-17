@@ -1,90 +1,74 @@
-(function () {
-  const catBubble = document.getElementById('catBubble');
-  const catNameLogo = document.getElementById('catNameLogo');
-  const catHugImg = document.getElementById('catHugImg');
-  const catHealthImg = document.getElementById('catHealthImg');
-  const catDietImg = document.getElementById('catDietImg');
-  const catGalleryImg = document.getElementById('catGalleryImg');
-  const catImg = document.getElementById('catImg');
-  const catContainer = document.getElementById('catContainer');
+import { SELECTORS } from './modules/constants.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const catBubble = document.getElementById(SELECTORS.catBubble);
+  const catNameLogo = document.getElementById(SELECTORS.catNameLogo);
+  const catHugImg = document.getElementById(SELECTORS.catHugImg);
+  const catHealthImg = document.getElementById(SELECTORS.catHealthImg);
+  const catDietImg = document.getElementById(SELECTORS.catDietImg);
+  const catGalleryImg = document.getElementById(SELECTORS.catGalleryImg);
+  const catImg = document.getElementById(SELECTORS.catImg);
+  const catContainer = document.getElementById(SELECTORS.catContainer);
 
   // Function to update an element’s properties
-  const updateElement = (element, { text = null, color = null, image = null, html = null } = {}) => {
+  const updateElement = (element, { text = null, color = null, image = null } = {}) => {
     if (text !== null) element.textContent = text;
     if (color !== null) element.style.color = color;
     if (image !== null) element.src = image;
-    if (html !== null) element.innerHTML = html;
   };
 
   // Function to handle hover effects on elements
-  const handleHover = (element, { hoverText = null, leaveText = null, hoverColor = null, leaveColor = null, hoverImage = null, leaveImage = null } = {}) => {
-    element.addEventListener('mouseenter', () => {
-      updateElement(element, { text: hoverText, color: hoverColor, image: hoverImage });
-    });
-    element.addEventListener('mouseleave', () => {
-      updateElement(element, { text: leaveText, color: leaveColor, image: leaveImage });
-    });
+  const handleHover = (element, options) => {
+    element.addEventListener('mouseenter', () => updateElement(element, options.hover));
+    element.addEventListener('mouseleave', () => updateElement(element, options.leave));
   };
 
   // Set hover effects on various elements with the `handleHover` function
-  handleHover(catBubble, { hoverText: 'Meowww', leaveText: 'Pet me' });
-  handleHover(catNameLogo, { hoverText: 'MY BABY', leaveText: 'SOLOMON', hoverColor: '#6ED5DB', leaveColor: 'black' });
-  handleHover(catHugImg, { hoverImage: 'images/index_images/cat_hug.gif', leaveImage: 'images/index_images/cat_hug.png' });
-  handleHover(catHealthImg, { hoverImage: 'images/index_images/cat_health.gif', leaveImage: 'images/index_images/cat_health.png' });
-  handleHover(catDietImg, { hoverImage: 'images/index_images/cat_diet.gif', leaveImage: 'images/index_images/cat_diet.png' });
-  handleHover(catGalleryImg, { hoverImage: 'images/index_images/cat_gallery.gif', leaveImage: 'images/index_images/cat_gallery.png' });
+  handleHover(catBubble, { hover: { text: 'Meowww' }, leave: { text: 'Pet me' } });
+  handleHover(catNameLogo, { hover: { text: 'MY BABY', color: '#6ED5DB' }, leave: { text: 'SOLOMON', color: 'black' } });
+  handleHover(catHugImg, { hover: { image: 'images/index_images/cat_hug.gif' }, leave: { image: 'images/index_images/cat_hug.png' } });
+  handleHover(catHealthImg, { hover: { image: 'images/index_images/cat_health.gif' }, leave: { image: 'images/index_images/cat_health.png' } });
+  handleHover(catDietImg, { hover: { image: 'images/index_images/cat_diet.gif' }, leave: { image: 'images/index_images/cat_diet.png' } });
+  handleHover(catGalleryImg, { hover: { image: 'images/index_images/cat_gallery.gif' }, leave: { image: 'images/index_images/cat_gallery.png' } });
 
-  // Function to create a message at the center of an element or return an existing one
+  // Function to center an element within a target container
+  const centerElement = (element, target) => {
+    const elementWidth = element.offsetWidth;
+    const elementHeight = element.offsetHeight;
+    const coords = target.getBoundingClientRect();
+    const targetCenterX = coords.width / 2;
+    const targetCenterY = coords.height / 2;
+
+    // Center the element relative to the target
+    element.style.left = `${targetCenterX - (elementWidth / 2)}px`;
+    element.style.top = `${targetCenterY - (elementHeight / 2)}px`;
+  };
+
+  // Function to create a message in the center of an element or update an existing one
   function createOrGetMessage(elem, html) {
     let existingMessage = document.getElementById('center-message');
 
     if (!existingMessage) {
-      let message = document.createElement('div');
+      const message = document.createElement('div');
       message.id = 'center-message';
-
-      message.style.cssText = `
-                font-size: 36px;
-                margin: 20px 0 10px;
-                background: linear-gradient(135deg, #6ED5DB, #67A6E8);
-                color: white;
-                border: none;
-                border-radius: 12px;
-                cursor: pointer;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                transition: all 0.3s ease;
-                position: absolute;  
-                padding: 5px; 
-                z-index: 10000; 
-                text-align: center;
-            `;
-
-
+      message.classList.add('center-message');
       message.innerHTML = html;
-      catContainer.append(message);
+      elem.appendChild(message);
 
-      const messageWidth = message.offsetWidth;
-      const messageHeight = message.offsetHeight;
-      const coords = elem.getBoundingClientRect();
-      const imgCenterX = coords.width / 2;
-      const imgCenterY = coords.height / 2;
-
-      message.style.left = imgCenterX - (messageWidth / 2) + "px";
-      message.style.top = imgCenterY - (messageHeight / 2) + "px";
+      centerElement(message, elem);
 
       return message;
     } else {
-
       existingMessage.innerHTML = html;
       return existingMessage;
     }
   }
 
-  // Event listener to show a temporary message when the main cat image is clicked
+  // Event listener to show a temporary message when clicking on the cat image
   catImg.addEventListener('click', () => {
     const message = createOrGetMessage(catContainer, 'Hello, world!');
-
-    setTimeout(() => {
-      message.remove();
-    }, 2000);
+    // setTimeout(() => {
+    //   message.remove();
+    // }, 2000);
   });
-})();
+});

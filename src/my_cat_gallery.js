@@ -1,84 +1,95 @@
-(function () {
-    const API_KEY = 'live_wLRK4FXcC44BVnuVXjIPuXo3W3ddMYQlNwySLjQu7z1Vm94HmVnQhf9tC8LaOlxB';
-    const API_URL = 'https://api.thecatapi.com/v1/images';
-    const ITEMS_PER_PAGE = 50;
-
-    // Set up form submission listener for image upload
-    document.getElementById('uploadForm').addEventListener('submit', handleUploadSubmit);
-
-    // Function to handle the image upload process
-    async function handleUploadSubmit(event) {
-        event.preventDefault();
-
-        const fileInput = document.getElementById('fileInput');
-        const uploadMessage = document.getElementById('uploadMessage');
-
-        const formData = new FormData();
-        formData.append('file', fileInput.files[0]);
-
-        try {
-
-            const response = await fetch(`${API_URL}/upload`, {
-                method: 'POST',
-                headers: {
-                    'x-api-key': API_KEY
-                },
-                body: formData
-            });
-
-            const responseData = await response.text();
+import  fetchData from './modules/api.js';
+import {API_KEY, API_URL, SELECTORS} from './modules/constants.js';
+import {createImage} from './modules/createElement.js';
 
 
-            if (response.ok) {
-                uploadMessage.textContent = 'Image uploaded successfully!';
-                await fetchImages();
-            } else if (responseData.includes("Classifcation failed: correct animal not found.")) {
-                uploadMessage.textContent = 'You can upload images only with cats';
-            } else {
-                uploadMessage.textContent = `Error: ${responseData}`;
+// Function to fetch and display images from the API
+async function loadGalleryImages() {
+    const galleryElement = document.getElementById(SELECTORS.gallery);
+    const errorMessage = document.getElementById(SELECTORS.errorMessage);
+    const fragment = new DocumentFragment();
+
+    try {
+        const options = {
+            headers: {
+                'x-api-key': API_KEY,
+                'Content-Type': 'application/json'
             }
+        };
+        const images = await fetchData(`${API_URL}/images?limit=50&order=DESC`, options);
+        images.forEach(image => {
+            const imgElement = createImage({image, alt: 'Cat photo'});
+            fragment.append(imgElement);
+        });
 
-        } catch (error) {
-            console.error(error);
+        galleryElement.append(fragment);
+    } catch (error) {
+        console.error(error);
+        errorMessage.textContent = 'Failed to load images';
+    }
+}
+
+// Function to add uploaded image to the gallery
+async function addNewGalleryImage() {
+    const galleryElement = document.getElementById(SELECTORS.gallery);
+    const errorMessage = document.getElementById(SELECTORS.errorMessage);
+
+
+    try {
+        const options = {
+            headers: {
+                'x-api-key': API_KEY,
+                'Content-Type': 'application/json'
+            }
+        };
+        const images = await fetchData(`${API_URL}/images?limit=50&order=DESC`, options);
+        const image = images && images.length && images[0];
+        const imgElement = createImage({image, alt: 'Cat photo'});
+
+        galleryElement.prepend(imgElement);
+    } catch (error) {
+        console.error(error);
+        errorMessage.textContent = 'Failed to load images';
+    }
+}
+
+
+// Function to handle the image upload process
+async function handleUpload(event) {
+    event.preventDefault();
+    const uploadMessage = document.getElementById(SELECTORS.uploadMessage);
+    const formData = new FormData(event.target);
+
+    formData.append('file', event.target.elements.fileInput.files[0]);
+
+    try {
+        const options = {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'x-api-key': API_KEY,
+            }
+        };
+        const response = await fetchData(`${API_URL}/images/upload`, options);
+
+        if (response) {
+            uploadMessage.textContent = 'Image uploaded successfully!';
+            await addNewGalleryImage();
+        }
+    } catch (error) {
+        if (error.message.includes("Unexpected token 'C'")) {
+            uploadMessage.textContent = 'You can upload images only with cats';
+        } else {
             uploadMessage.textContent = `Upload failed: ${error.message}`;
+            console.error("Error in handleUpload:", error);
         }
     }
+}
 
-    // Function to fetch and display images from the API
-    async function fetchImages() {
-        const gallery = document.getElementById('gallery');
-        const errorMessage = document.getElementById('errorMessage');
+// Display images when the page loads
+loadGalleryImages();
 
-        gallery.innerHTML = '';
+// Set up form submission listener for image upload
+const uploadForm = document.getElementById(SELECTORS.uploadForm);
+uploadForm.addEventListener('submit', handleUpload);
 
-        try {
-
-            const response = await fetch(`${API_URL}?limit=${ITEMS_PER_PAGE}&order=DESC`, {
-                headers: {
-                    'x-api-key': API_KEY
-                }
-            });
-
-            if (response.ok) {
-                const images = await response.json();
-
-
-                images.forEach(image => {
-                    const imgElement = document.createElement('img');
-                    imgElement.src = image.url;
-                    imgElement.alt = 'Cat Image';
-                    gallery.appendChild(imgElement);
-                });
-            } else {
-                errorMessage.textContent = `Error fetching images: ${response.statusText}`;
-            }
-        } catch (error) {
-            console.error(error);
-            errorMessage.textContent = `Failed to load images: ${error.message}`;
-        }
-    }
-
-    // Display images when the page loads
-    fetchImages();
-
-})();
