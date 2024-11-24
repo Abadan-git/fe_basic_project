@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Event listener to show a temporary message when clicking on the cat image
   catImg.addEventListener('click', () => {
     const message = createOrGetMessage(catContainer, 'Hello, world!');
-    // setTimeout(() => {
-    //   message.remove();
-    // }, 2000);
+    setTimeout(() => {
+      message.remove();
+    }, 2000);
   });
 });
