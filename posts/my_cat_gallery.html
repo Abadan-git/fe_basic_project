@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cat Image Gallery</title>
+  <link rel="stylesheet" href="../css/my_cat_gallery_style.css">
+</head>
+<body>
+<header>
+  <div class="container">
+    <a href="../index.html">
+      <img src="../images/index_images/back.png" alt="back" height="20px">
+    </a>
+    <div class="logo">MY CAT GALLERY</div>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">BLOG</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="../index.html#articles">ARTICLES</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main>
+<section class="upload-section">
+  <h2>Upload an Image</h2>
+  <form id="uploadForm">
+    <input type="file" id="fileInput" name="fileInput" accept="image/*" required>
+    <button type="submit">Upload Image</button>
+  </form>
+  <p id="uploadMessage" class="upload-message"></p>
+</section>
+
+<section class="gallery-section">
+  <h2>My Cat Image Gallery</h2>
+  <div id="gallery" class="gallery"></div>
+  <p id="errorMessage" class="error-message"></p>
+</section>
+</main>
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <p>CAT SOLOMON</p>
+      <p>For any information, contact the cat's mother</p>
+      <div class="social-links">
+        <a href="#">Twitter</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+<script type="module" src="../src/my_cat_gallery.js"></script>
+
+</html>

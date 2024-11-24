@@ -71,6 +71,22 @@ nav {
     border-radius: 20px;
 }
 
+.center-message {
+    font-size: 36px;
+    margin: 20px 0 10px;
+    background: linear-gradient(135deg, #6ED5DB, #67A6E8);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    position: absolute;
+    padding: 5px;
+    z-index: 10000;
+    text-align: center;
+}
+
 .speech-bubble {
     top: 20px;
     position: absolute;
