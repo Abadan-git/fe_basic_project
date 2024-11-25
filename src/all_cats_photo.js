@@ -1,6 +1,7 @@
 import fetchData from './modules/api.js';
-import { API_URL, SELECTORS, errorImgUrl } from './modules/constants.js';
+import { API_URL, SELECTORS, errorImgUrl, catBreedsKey } from './modules/constants.js';
 import {createOption} from './modules/createElement.js';
+import { getFromLocalStorage, saveToLocalStorage } from './modules/localStorage.js';
 
 // Function to populate the dropdown with cat breeds
 async function getBreedArray() {
@@ -8,7 +9,13 @@ async function getBreedArray() {
     const fragment = new DocumentFragment();
 
     try {
-        const breeds = await fetchData(`${API_URL}/breeds`);
+        let breeds = getFromLocalStorage(catBreedsKey);
+
+        if (!breeds) {
+            breeds = await fetchData(`${API_URL}/breeds`);
+            saveToLocalStorage(catBreedsKey, breeds);
+        }
+
         breeds.forEach(breed => {
             const option = createOption(breed);
             fragment.append(option);

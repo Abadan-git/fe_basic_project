@@ -23,4 +23,7 @@ export const SELECTORS = {
     catContainer: 'catContainer'
 };
 
+// localStore
+export const catBreedsKey = 'catBreeds';
+
 export const errorImgUrl = 'https://t3.ftcdn.net/jpg/05/08/67/42/360_F_508674247_d8JegDh7o9yJmYcae2jdEpsQ9LVmiXDM.jpg'
