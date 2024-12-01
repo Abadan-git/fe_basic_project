@@ -1,6 +1,7 @@
 import fetchData from './modules/api.js';
 import { API_URL, SELECTORS, errorImgUrl, catBreedsKey } from './modules/constants.js';
-import {createOption} from './modules/createElement.js';
+import CreateOption from './modules/CreateOption.js';
+import CreateImage from './modules/CreateImage.js';
 import { getFromLocalStorage, saveToLocalStorage } from './modules/localStorage.js';
 
 // Function to populate the dropdown with cat breeds
@@ -8,23 +9,19 @@ async function getBreedArray() {
     const selectElement = document.getElementById(SELECTORS.friendsDropdown);
     const fragment = new DocumentFragment();
 
-    try {
-        let breeds = getFromLocalStorage(catBreedsKey);
+    let breeds = getFromLocalStorage(catBreedsKey);
 
-        if (!breeds) {
-            breeds = await fetchData(`${API_URL}/breeds`);
-            saveToLocalStorage(catBreedsKey, breeds);
-        }
-
-        breeds.forEach(breed => {
-            const option = createOption(breed);
-            fragment.append(option);
-        });
-
-        selectElement.append(fragment);
-    } catch (error) {
-        console.error("Failed to create option:", error.message);
+    if (!breeds) {
+        breeds = await fetchData(`${API_URL}/breeds`);
+        saveToLocalStorage(catBreedsKey, breeds);
     }
+
+    breeds.forEach(breed => {
+        const option = new CreateOption(breed.id, breed.name);
+        option.appendTo(fragment);
+    });
+
+    selectElement.appendChild(fragment);
 }
 
 // Function to open the popup with the selected breed’s image
@@ -33,30 +30,36 @@ async function openPopupWithImage(breedId) {
     const imagesContainer = document.getElementById(SELECTORS.imagesContainer);
 
     popup.classList.remove('hidden');
-    const imageUrl = await fetchCatImage(breedId);
-    const img = document.createElement('img');
-    img.src = imageUrl;
+    let imageUrl;
 
-    imagesContainer.appendChild(img);
+    try {
+        imageUrl = await fetchCatImage(breedId);
+    } catch (error) {
+        console.error("Error fetching cat image:", error.message);
+        imageUrl = errorImgUrl;
+    }
+
+    const imgElement = new CreateImage(imageUrl, 'Cat image');
+    imgElement.appendTo(imagesContainer);
 }
 
 // Function to fetch an image of a specific breed
 async function fetchCatImage(breedId) {
     const url = `${API_URL}/images/search?breed_ids=${breedId}`;
-    try {
-        const data = await fetchData(url);
-        return data[0].url;
-    } catch (error) {
-        console.error("Error fetching cat image:", error.message);
-        return errorImgUrl;
-    }
+
+    const data = await fetchData(url);
+    return data[0].url;
 }
 
 // Event listener for button click to open the popup with an image
 const clickBtn = document.getElementById(SELECTORS.clickButton);
-clickBtn.addEventListener('click', () => {
-    const breedId = document.getElementById(SELECTORS.friendsDropdown).value;
-    openPopupWithImage(breedId);
+clickBtn.addEventListener('click', async () => {
+    try {
+        const breedId = document.getElementById(SELECTORS.friendsDropdown).value;
+        await openPopupWithImage(breedId);
+    } catch (error) {
+        console.error("Error in openPopupWithImage:", error.message);
+    }
 });
 
 // Event listener to close the popup when clicking outside the image
@@ -71,4 +74,8 @@ popup.addEventListener('click', (event) => {
 });
 
 // Populate the dropdown with breeds when the page loads
-getBreedArray();
+try {
+    await getBreedArray();
+} catch (error) {
+    console.error("Error populating dropdown:", error.message);
+}
