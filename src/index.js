@@ -1,4 +1,5 @@
 import { SELECTORS } from './modules/constants.js';
+import CreateDiv from './modules/CreateDiv.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const catBubble = document.getElementById(SELECTORS.catBubble);
@@ -49,15 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let existingMessage = document.getElementById('center-message');
 
     if (!existingMessage) {
-      const message = document.createElement('div');
-      message.id = 'center-message';
-      message.classList.add('center-message');
-      message.innerHTML = html;
-      elem.appendChild(message);
+      const messageDiv = new CreateDiv({ id: 'center-message', className: 'center-message' });
+      messageDiv.element.innerHTML = html;
+      elem.appendChild(messageDiv.getElement());
 
-      centerElement(message, elem);
+      centerElement(messageDiv.getElement(), elem);
 
-      return message;
+      return messageDiv.getElement();
     } else {
       existingMessage.innerHTML = html;
       return existingMessage;

@@ -1,9 +1,11 @@
 async function fetchData(url, options = {}) {
     try {
         const response = await fetch(url, options);
-        return await response.json();
+        if (response.ok){
+            return await response.json();
+        }
+        throw new Error(`${url} response failed`);
     } catch (error) {
-        console.error(error.message);
         throw error;
     }
 }
