@@ -20,7 +20,8 @@ export const SELECTORS = {
     catDietImg: 'catDietImg',
     catGalleryImg: 'catGalleryImg',
     catImg: 'catImg',
-    catContainer: 'catContainer'
+    catContainer: 'catContainer',
+    message: 'center-message',
 };
 
 // localStore

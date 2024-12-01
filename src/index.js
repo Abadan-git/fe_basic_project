@@ -1,4 +1,5 @@
 import { SELECTORS } from './modules/constants.js';
+import CreateDiv from './modules/CreateDiv.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const catBubble = document.getElementById(SELECTORS.catBubble);
@@ -9,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const catGalleryImg = document.getElementById(SELECTORS.catGalleryImg);
   const catImg = document.getElementById(SELECTORS.catImg);
   const catContainer = document.getElementById(SELECTORS.catContainer);
+  let existingMessage = document.getElementById(SELECTORS.message);
 
   // Function to update an element’s properties
   const updateElement = (element, { text = null, color = null, image = null } = {}) => {
@@ -46,18 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to create a message in the center of an element or update an existing one
   function createOrGetMessage(elem, html) {
-    let existingMessage = document.getElementById('center-message');
 
     if (!existingMessage) {
-      const message = document.createElement('div');
-      message.id = 'center-message';
-      message.classList.add('center-message');
-      message.innerHTML = html;
-      elem.appendChild(message);
+      const messageDiv = new CreateDiv({ id: 'center-message', className: 'center-message', innerHTML: html });
+      messageDiv.appendTo(elem);
 
-      centerElement(message, elem);
+      centerElement(messageDiv.getElement(), elem);
 
-      return message;
+      return messageDiv.getElement();
     } else {
       existingMessage.innerHTML = html;
       return existingMessage;
